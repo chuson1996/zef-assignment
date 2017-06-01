@@ -1,36 +1,150 @@
-<div *ngIf="view === 'default'" class="app" fxLayout="column" fxLayoutAlign="center stretch">
-  <div class="title" fxLayout="row" fxLayoutAlign="center center">
-    {{title}}
+<div class="container">
+  <div class="choosePlanSection" *ngIf="steps[currentStep] === 'Choose plan'">
+    <div class="title">
+      <h1>A perfect plan, for everyone</h1>
+      <p>For detailed feature breakdown, view our <a>pricing page</a></p>
+      <md-button-toggle-group #filteredPlans="mdButtonToggleGroup">
+        <md-button-toggle value="monthly" ng-selected>
+          monthly
+        </md-button-toggle>
+        <md-button-toggle value="annual">
+          annual
+        </md-button-toggle>
+      </md-button-toggle-group>
+      <!--<div class="example-selected-value">Selected value: {{filteredPlans.value}}</div>-->
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutWrap fxLayoutGap="20px">
+      <div class="plan" *ngFor="let plan of (filteredPlans.value === 'annual' ? annualPlans : monthlyPlans)">
+        <h4>{{ plan.name }}</h4>
+        <h1>{{ isNaN(plan.price) ? 'Custom' : '$' + plan.price }}</h1>
+        <p>{{ isFinite(plan.noSurveys) ? plan.noSurveys : 'Unlimited' }} surveys</p>
+        <p>MORE DETAILS</p>
+        <div *ngIf="plan.name === 'Enterprise'" fxLayout="column">
+          <button md-raised-button>Contact us</button>
+          <a>Contact us</a>
+        </div>
+        <div *ngIf="plan.name !== 'Enterprise'" fxLayout="column">
+          <button md-raised-button (click)="choosePlan(plan); next();">Choose plan</button>
+          <a>Start free trial</a>
+        </div>
+      </div>
+    </div>
   </div>
+  
+  <div class="formSection" *ngIf="steps[currentStep] === 'Company Info' || steps[currentStep] === 'Payment method' || steps[currentStep] === 'Pay'">
+    <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="start baseline">
+      <h3 fxFlex="40%"><i class="icon zef-icon-lock"></i>Checkout</h3>
+      <h4 style="text-align: right;" fxFlex="60%">
+        Choose plan ---
+        Company info ---
+        Payment method ---
+        Pay
+      </h4>
+    </div>
+    <div class="content" fxLayout.xs="column" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start start">
+      <div class="plan" fxFlexOrder.xs="2" fxFlex="30%">
+        <p><b>Shopping card</b></p>
+        <h1>
+          {{ pickedPlan.name.toUpperCase() }} plan
+        </h1>
+        <p>{{ isFinite(pickedPlan.noSurveys) ? pickedPlan.noSurveys : 'Unlimited' }} surveys</p>
+        <h2>{{ isNaN(pickedPlan.price) ? 'Custom' : '$' + pickedPlan.price }}</h2>
+        <p>To be billed {{ pickedPlan.billingFrequency }}</p>
+        <p>
+          After 10% {{ getAdjectiveOf(pickedPlan.billingFrequency) }} billing discount.
+          <span *ngIf="pickedPlan.saving">
+            <br>
+            {{ capitalize(getAdjectiveOf(pickedPlan.billingFrequency)) }} Savings ${{ pickedPlan.saving }}.
+          </span>
+        </p>
+        <hr>
+        <p>PLAN DETAILS</p>
+      </div>
+      <div class="formContainer" fxFlexOrder="1" *ngIf="steps[currentStep] === 'Company Info'">
+        <p><b>Verify company info</b></p>
 
-  <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex>
-    Price: {{plan === 'monthly' ? 10 : 5}}
-    <br>
-    <br>
+        <form (submit)="next()" #customerForm="ngForm">
+          <md-input-container>
+            <input mdInput placeholder="Name" [(ngModel)]="fields.name" name="name" required>
+          </md-input-container>
 
-    <button md-raised-button (click)="plan = 'annual'">Annual pricing</button>
-    <br>
-    <button md-raised-button (click)="view = 'company-info'">Company info</button>
-  </div>
-</div>
+          <br>
 
-<div *ngIf="view === 'company-info'" class="app" fxLayout="column" fxLayoutAlign="center stretch">
-  <div class="title" fxLayout="row" fxLayoutAlign="center center">
-    {{company}} - Company info
-  </div>
+          <div fxLayout="row" fxLayoutAlign="start baseline" fxLayoutGap="16px">
+            <md-select placeholder="Country" fxFlex="67%" [(ngModel)]="fields.country" name="country" required>
+              <md-option *ngFor="let state of states" [value]="state">{{ state }}</md-option>
+            </md-select>
+            <md-input-container>
+              <input mdInput placeholder="ZIP code" [(ngModel)]="fields.zipCode" name="zipCode" required>
+            </md-input-container>
+          </div>
 
-  <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex>
-    <md-card>
-      <md-card-header>
-        <md-card-title>Information</md-card-title>
-        <md-card-subtitle>Account</md-card-subtitle>
-      </md-card-header>
+          <br>
 
-      <md-card-content>
-        <md-input-container>
-          <input md-input placeholder="Company name..." [(ngModel)]="company"/>
-        </md-input-container>
-      </md-card-content>
-    </md-card>
+          <md-input-container>
+            <input mdInput placeholder="City" [(ngModel)]="fields.city" name="city" required>
+          </md-input-container>
+
+          <br>
+
+          <button md-raised-button style="width: 100%;" type="submit">Add Payment Method</button>
+        </form>
+      </div>
+      <div class="formContainer" fxFlexOrder="1" *ngIf="steps[currentStep] === 'Payment method'">
+        <p><b>Add a payment method</b></p>
+
+        <form (submit)="next()" #billingForm="ngForm">
+          <md-input-container>
+            <input mdInput placeholder="Name on the card" [(ngModel)]="fields.cardName" name="cardName" required>
+          </md-input-container>
+
+          <br>
+
+          <md-input-container>
+            <input mdInput placeholder="Card number (0000 0000 0000 0000)" required [(ngModel)]="fields.cardNumber" name="cardNumber">
+          </md-input-container>
+
+          <br>
+
+          <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start baseline">
+            <div fxLayoutAlign="row" fxLayoutGap="10px">
+              <md-select placeholder="Month" [(ngModel)]="fields.expiryMonth" name="expiryMonth" required>
+                <md-option *ngFor="let month of months; let i = index;" [value]="i + 1">
+                  {{ month }}
+                </md-option>
+              </md-select>
+              <md-select placeholder="Year" [(ngModel)]="fields.expiryYear" name="expiryYear" required>
+                <md-option *ngFor="let year of years" [value]="year">
+                  {{ year }}
+                </md-option>
+              </md-select>
+            </div>
+            <md-input-container>
+              <input mdInput placeholder="CVC (3-4 digits)" [(ngModel)]="fields.cardCVC" name="cardCVC" required>
+            </md-input-container>
+          </div>
+
+          <br>
+
+          <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start baseline">
+            <md-select placeholder="Country" required fxFlex="67%" [(ngModel)]="fields.cardCountry" name="cardCountry">
+              <md-option *ngFor="let state of states" [value]="state">{{ state }}</md-option>
+            </md-select>
+            <md-input-container>
+              <input mdInput placeholder="ZIP code" required [(ngModel)]="fields.cardCountryZipCode" name="cardCountryZipCode">
+            </md-input-container>
+          </div>
+
+          <br>
+
+          <button md-raised-button style="width: 100%;" type="submit">Review Order</button>
+        </form>
+      </div>
+      <div class="formContainer" *ngIf="steps[currentStep] === 'Pay'" style="text-align: center;">
+        <h1>Total Billed ${{ pickedPlan.price }}</h1>
+        <button md-raised-button (click)="confirm()">Confirm payment</button>
+        <p>Secure 128-bit encrypted payment</p>
+      </div>
+    </div>
   </div>
 </div>
