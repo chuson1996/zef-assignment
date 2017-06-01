@@ -7,19 +7,40 @@
   }
 }
 
+a.navigation {
+  &:not(.disabled) {
+    cursor: pointer;
+  }
+  color: #83b8dc;
+  &.active {
+    color: #2d88c9;
+  }
+  &.disabled {
+    color: #88949d;
+  }
+}
+
 .title {
   padding: 16px;
 
   font-size: 24px;
-  background-color: lightgray;
+  text-align: center;
+}
+
+.plans {
+  padding-left: 20px;
 }
 
 .plan {
-  display: inline-block;
-  width: 178px;
+  flex-basis: 27.9%;
+  // display: inline-block;
+  // width: 178px;
   background-color: #f4f7f8;
   text-align: center;
   padding: 10px;
+  @media (max-width: 767px) {
+    flex-basis: 44.3%;
+  }
 }
 
 .formSection {

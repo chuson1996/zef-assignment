@@ -26,7 +26,19 @@ export class AppComponent {
   currentStep = 0;
   years = Array(20).fill(null).map((_, i) => 2017 - i).reverse();
   months = ['Jan', 'Feb', 'Mar', 'April', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  steps = ['Choose plan', 'Company Info', 'Payment method', 'Pay'];
+  steps = [{
+    name: 'Choose plan',
+    completed: false
+  }, {
+    name: 'Company Info',
+    completed: false
+  }, {
+    name: 'Payment method',
+    completed: false
+  }, {
+    completed: false,
+    name: 'Pay'
+  }];
   pickedPlan: Plan;
   filteredPlans = {
     value: 'monthly'
@@ -63,19 +75,26 @@ export class AppComponent {
     this.pickedPlan = plan;
   }
 
+  goToStep(stepIndex: number) {
+    this.currentStep = stepIndex;
+  }
+
   next() {
     if (this.currentStep === 1) {
       if (this.customerForm.valid) {
+        this.steps[this.currentStep].completed = true;
         this.currentStep++;
       }
       return;
     } else if (this.currentStep === 2) {
       if (this.billingForm.valid) {
+        this.steps[this.currentStep].completed = true;
         this.currentStep++;
       }
 
       return;
     }
+    this.steps[this.currentStep].completed = true;
     this.currentStep++;
   }
 

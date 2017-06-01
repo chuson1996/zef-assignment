@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="choosePlanSection" *ngIf="steps[currentStep] === 'Choose plan'">
+  <div class="choosePlanSection" *ngIf="currentStep === 0">
     <div class="title">
       <h1>A perfect plan, for everyone</h1>
       <p>For detailed feature breakdown, view our <a>pricing page</a></p>
@@ -13,32 +13,41 @@
       </md-button-toggle-group>
       <!--<div class="example-selected-value">Selected value: {{filteredPlans.value}}</div>-->
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutWrap fxLayoutGap="20px">
-      <div class="plan" *ngFor="let plan of (filteredPlans.value === 'annual' ? annualPlans : monthlyPlans)">
-        <h4>{{ plan.name }}</h4>
-        <h1>{{ isNaN(plan.price) ? 'Custom' : '$' + plan.price }}</h1>
-        <p>{{ isFinite(plan.noSurveys) ? plan.noSurveys : 'Unlimited' }} surveys</p>
-        <p>MORE DETAILS</p>
-        <div *ngIf="plan.name === 'Enterprise'" fxLayout="column">
-          <button md-raised-button>Contact us</button>
-          <a>Contact us</a>
-        </div>
-        <div *ngIf="plan.name !== 'Enterprise'" fxLayout="column">
-          <button md-raised-button (click)="choosePlan(plan); next();">Choose plan</button>
-          <a>Start free trial</a>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutWrap>
+      <div
+        *ngFor="let plan of (filteredPlans.value === 'annual' ? annualPlans : monthlyPlans)"
+        fxFlex.xs="100%"
+        fxFlex.sm="50%"
+        fxFlex.md="33.3%"
+        fxFlex="25%"
+        style="padding: 10px"
+      >
+        <div class="plan">
+          <h4>{{ plan.name }}</h4>
+          <h1>{{ isNaN(plan.price) ? 'Custom' : '$' + plan.price }}</h1>
+          <p>{{ isFinite(plan.noSurveys) ? plan.noSurveys : 'Unlimited' }} surveys</p>
+          <p>MORE DETAILS</p>
+          <div *ngIf="plan.name === 'Enterprise'" fxLayout="column">
+            <button md-raised-button>Contact us</button>
+            <a>Contact us</a>
+          </div>
+          <div *ngIf="plan.name !== 'Enterprise'" fxLayout="column">
+            <button md-raised-button (click)="choosePlan(plan); next();">Choose plan</button>
+            <a>Start free trial</a>
+          </div>
         </div>
       </div>
     </div>
   </div>
   
-  <div class="formSection" *ngIf="steps[currentStep] === 'Company Info' || steps[currentStep] === 'Payment method' || steps[currentStep] === 'Pay'">
+  <div class="formSection" *ngIf="[1, 2, 3].indexOf(currentStep) > -1">
     <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="start baseline">
       <h3 fxFlex="40%"><i class="icon zef-icon-lock"></i>Checkout</h3>
       <h4 style="text-align: right;" fxFlex="60%">
-        Choose plan ---
-        Company info ---
-        Payment method ---
-        Pay
+        <a class="navigation" (click)="goToStep(0)">Choose plan</a>
+        <a [class]="'navigation ' + (currentStep === 1 ? 'active ' : (!steps[1].completed ? 'disabled' : ''))" (click)="steps[1].completed && goToStep(1)"> --- Company info</a>
+        <a [class]="'navigation ' + (currentStep === 2 ? 'active ' : (!steps[2].completed ? 'disabled' : ''))" (click)="steps[2].completed && goToStep(2)"> --- Payment method</a>
+        <a [class]="'navigation ' + (currentStep === 3 ? 'active ' : (!steps[3].completed ? 'disabled' : ''))" (click)="steps[3].completed && goToStep(3)"> --- Pay</a>
       </h4>
     </div>
     <div class="content" fxLayout.xs="column" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start start">
@@ -60,7 +69,7 @@
         <hr>
         <p>PLAN DETAILS</p>
       </div>
-      <div class="formContainer" fxFlexOrder="1" *ngIf="steps[currentStep] === 'Company Info'">
+      <div class="formContainer" fxFlexOrder="1" *ngIf="currentStep === 1">
         <p><b>Verify company info</b></p>
 
         <form (submit)="next()" #customerForm="ngForm">
@@ -90,7 +99,7 @@
           <button md-raised-button style="width: 100%;" type="submit">Add Payment Method</button>
         </form>
       </div>
-      <div class="formContainer" fxFlexOrder="1" *ngIf="steps[currentStep] === 'Payment method'">
+      <div class="formContainer" fxFlexOrder="1" *ngIf="currentStep === 2">
         <p><b>Add a payment method</b></p>
 
         <form (submit)="next()" #billingForm="ngForm">
@@ -140,7 +149,7 @@
           <button md-raised-button style="width: 100%;" type="submit">Review Order</button>
         </form>
       </div>
-      <div class="formContainer" *ngIf="steps[currentStep] === 'Pay'" style="text-align: center;">
+      <div class="formContainer" *ngIf="currentStep === 3" style="text-align: center;">
         <h1>Total Billed ${{ pickedPlan.price }}</h1>
         <button md-raised-button (click)="confirm()">Confirm payment</button>
         <p>Secure 128-bit encrypted payment</p>
