@@ -94,15 +94,15 @@ Make an application that replicates the given design visually as closely as poss
 
 ### 3) Advanced Assignment
 
-Make an application that implements the functionality of the given design. You can implement the UI with material components that resembles the components in the design, i.e. the visual appearance does not need to match the design just the functionality and general layout. For the interaction parts that are not clearly visible in the design use your own imagination about how the checkout process should work. We don't expect fully implemented application only the basic functionality that forms the basic checkout process visible in the design, but its up to you how far you take the assignment.
+Make an application that implements the functionality of the given design. You can implement the UI with material components that resembles the components in the design, i.e. the visual appearance does not need to match the design just the functionality and general layout. 
 
 ##### Design for the app:
 
-  Check the design-1.png, design-2.png and design-3.png images in the root of this repository.
+  Check the [design-1.png](https://github.com/zefoy/zef-assignment/blob/master/design-1.png), [design-2.png](https://github.com/zefoy/zef-assignment/blob/master/design-2.png) and [design-3.png](https://github.com/zefoy/zef-assignment/blob/master/design-3.png) images in the root of this repository.
 
 ##### Minimum requirements:
 
-  The data format needs to be as in the example data provided in the data.json file which is also in the root of this repository.
+  The data format needs to be as in the example data provided in the [data.json](https://github.com/zefoy/zef-assignment/blob/master/data.json) file which is also in the root of this repository.
 
   The left side panel needs to be controlled by the router url / tabs (Only the build tab needs to have content, others can be empty).
 
