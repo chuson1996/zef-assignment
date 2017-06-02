@@ -15,9 +15,9 @@ Make an application that implements the functionality of the given design. You c
 
 ##### Steps to get started:
 
-  - Create a new local branch for your work.
+  - Fork the repository to your own GitHub account.
 
-    You can do commits to your branch as you wish, but only push your final version before the given deadline.
+    Make a Pull Request when you are done with the assignment and want to return your work.
 
   - Setup your development environment by running: npm install
 
@@ -52,6 +52,8 @@ Make an application that implements the functionality of the given design. You c
 
 Make an application that replicates the given design visually as closely as possible. For margins / paddings / etc. that are not defined in the design you can use your own estimation. Try to make the styles generic, i.e. don't style each element individually, instead style each widget / element with using generic classes. Use variables for max width and other layout related sizes for easy changing (Only the main layout parts, don't make everything like all the paddings and margins as variables).
 
+Fork the repository to get started and to return the assignment make a Pull Request.
+
 ##### Design to replicate:
 
   https://projects.invisionapp.com/d/main#/projects/prototypes/10303166
@@ -60,9 +62,9 @@ Make an application that replicates the given design visually as closely as poss
 
 ##### Steps to get started:
 
-  - Create a new local branch for your work.
+  - Fork the repository to your own GitHub account.
 
-    You can do commits to your branch as you wish, but only push your final version before the given deadline.
+    Make a Pull Request when you are done with the assignment and want to return your work.
 
   - Setup your development environment by running: npm install
 
