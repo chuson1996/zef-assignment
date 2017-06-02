@@ -98,11 +98,11 @@ Fork the repository to get started and to return the assignment make a Pull Requ
 
 Make an application that implements the functionality of the given design. You can implement the UI with material components that resembles the components in the design, i.e. the visual appearance does not need to match the design just the functionality and general layout. 
 
+The application you are implementing is a PowerPoint like slide view with side panel controls. There can be slide groups and individual slides. You should pay attention to the efficiency of the implementation so that it can handle of large amount of slides and complex editing view even though in your implementation the editing view will be minimal.
+
 ##### Design for the app:
 
   Check the [design-1.png](https://github.com/zefoy/zef-assignment/blob/master/design-1.png), [design-2.png](https://github.com/zefoy/zef-assignment/blob/master/design-2.png) and [design-3.png](https://github.com/zefoy/zef-assignment/blob/master/design-3.png) images in the root of this repository.
-
-  Left side of the application lists created questions / groups and the rights side shows the actual editable content for the items listed on left. The selection of active item can be made either from the left or from the right view.
 
 ##### Minimum requirements:
 
