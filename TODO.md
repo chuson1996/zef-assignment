@@ -100,6 +100,8 @@ Make an application that implements the functionality of the given design. You c
 
   Check the [design-1.png](https://github.com/zefoy/zef-assignment/blob/master/design-1.png), [design-2.png](https://github.com/zefoy/zef-assignment/blob/master/design-2.png) and [design-3.png](https://github.com/zefoy/zef-assignment/blob/master/design-3.png) images in the root of this repository.
 
+  Left side of the application lists created questions / groups and the rights side shows the actual editable content for the items listed on left. The selection of active item can be made either from the left or from the right view.
+
 ##### Minimum requirements:
 
   The data format needs to be as in the example data provided in the [data.json](https://github.com/zefoy/zef-assignment/blob/master/data.json) file which is also in the root of this repository.
