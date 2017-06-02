@@ -1,4 +1,4 @@
-#ZEF Assignment
+ZEF Assignment
 ---------------
 
 You should have been tasked by ZEF to do either the 1) Coding Assignment *OR* 2) Design Assignment *OR* 3) Advanced Assignment so there is no need to make all!
@@ -102,7 +102,7 @@ Make an application that implements the functionality of the given design. You c
 
 ##### Minimum requirements:
 
-  The data format needs to be as in the example data provided in the data.json file.
+  The data format needs to be as in the example data provided in the data.json file which is also in the root of this repository.
 
   The left side panel needs to be controlled by the router url / tabs (Only the build tab needs to have content, others can be empty).
 
